@@ -190,7 +190,8 @@ public class Game {
     }
 
     /**
-     * Quick check to see if the object is supported.
+     * Quick check to see if the object is supported by a block underneath it.
+     * The object in question must be either an array of positions describing a snake or a girder.
      *
      * @param object An array of positions that the object currently resides in, sorted from top to bottom.
      * @return True if the snake is currently supported, otherwise false.
@@ -287,6 +288,13 @@ public class Game {
         // dummy
         return null;
     }
+
+    /**
+     * Used to get the last length of the snake before any gravity was applied to it.
+     * literally only used to pass one test case that checks if the tail of the snake has fallen off the edge
+     * this code is so badly designed, i fucking hate it
+     * @return The last length of the snake as an integer.
+     */
 
     public int getSnakeLength() {
         return snakeLength;

@@ -61,6 +61,13 @@ public class SnakeMove implements Event {
 		}
 	}
 
+	/**
+	 * Moves the girder object in the given direction.
+	 * @param direction The direction to move the girder in.
+	 * @param game The game to modify.
+	 * @return True if the girder was moved, otherwise false.
+	 */
+
 	private boolean moveGirder(Direction direction, Game game) {
 		Position[] girder = findGirder(game);
 		boolean traverseBackwards = true;
@@ -83,15 +90,16 @@ public class SnakeMove implements Event {
 					traverseBackwards = false;
 				break;
 		}
-
+		// check if moving the tile will cause the girder to collide with another game object
 		for (int i = 0; i != girder.length; ++i) {
 			Tile newPos = game.getTile(girder[i].move(direction));
 			if (newPos != null)
 				if (newPos.isObstruction() && !(newPos instanceof GirderTile))
-					return false;
+					return false; // girder can't move, don't let snake move
 		}
 
 		// duplicate code, sue me
+		// see Game.applyGravity for a more in-depth explanation of what's going on
 		if (traverseBackwards) {
 			for (int i = girder.length - 1; i != -1; --i) {
 				game.setTile(girder[i].move(direction), new GirderTile());
@@ -186,7 +194,7 @@ public class SnakeMove implements Event {
 				}
 			}
 		}
-		// ArrayList is implemented using an array underneath so it basically does the same copy operation as what happens in findSnake
+		// ArrayList is implemented using an array under the hood so it basically does the same copy operation as what happens in findSnake
 		return sections.toArray(new Position[0]); // Done
 	}
 }
